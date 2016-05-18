@@ -1,10 +1,10 @@
 #### Comelec tool
-1. Download Comelec Data (TODO:provide link)
+1. Download [Comelec Data](https://googledrive.com/host/0Bwosw2dzmzRdZkp2eWwyZC03dGs)(333MB)
 2. Extract to \<some folder\>
 3. Download "comelec" tool from [releases](https://github.com/noypi/election2016/tree/master/releases)
 4. (optional) Copy "comelec" tool to %PATH% or $PATH
 
-##### Update scripts
+##### Update scripts (example updating index for searching)
 5. Edit [update_index.js](https://github.com/noypi/election2016/blob/master/comelec/cmd/comelec/update_index.js)
 5.1. Change $path to "\<some folder\>/www.pilipinaselectionresults2016.com", where \<some folder\> is the location of the Comelec Data
 5.2. (Optional) index region names "comelec update_index.js" 
@@ -14,10 +14,6 @@
 6. Edit [example.js](https://github.com/noypi/election2016/blob/master/comelec/cmd/comelec/example.js)
 6.1. Change $path
 6.2. Run "comelec example.js"
-
-
-##### Golang setup
-http://noypi-linux.blogspot.com/2014/07/golang-windows-complete-setup-guide.html
 
 
 #### Using "comelec" tool
@@ -76,7 +72,5 @@ $eachls('data/regions', function(item){
 })
 
 
-
-
-
-
+###### Golang setup
+http://noypi-linux.blogspot.com/2014/07/golang-windows-complete-setup-guide.html
