@@ -1,4 +1,4 @@
-### running "comelec" tool
+### running "comelec" tool (more [examples](https://github.com/noypi/election2016/tree/master/comelec/examples))
 ```
 > comelec example.js
 ```
