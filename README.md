@@ -31,6 +31,7 @@
 ###### must initialize comelec data path
 ```javascript
 $path = "/d/dev/res/election2016/www.pilipinaselectionresults2016.com";
+$dbname = "db";
 ```
 
 ###### search region names, example
@@ -58,18 +59,14 @@ _.each(oRegion.subRegions, function(item){
 })
 ```
 
-###### using $eachls()
+###### using $kprefix()
 ```javascript
-console.log("\n----- using $eachls")
+console.log("\n----- using $kprefix")
 // list each
-var i = 0
-$eachls('data/regions', function(item){
-	console.log("i=", i, ",", item)
-	i++;
-	if (3==i) {
-		return false // return false to stop
-	}
-})
+var limit = 3;
+$kprefix('data/regions', function(item){
+	$prn(item)
+}, limit)
 
 
 ###### Golang setup
