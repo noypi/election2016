@@ -1,0 +1,82 @@
+#### Comelec tool
+1. Download Comelec Data (TODO:provide link)
+2. Extract to \<some folder\>
+3. Download "comelec" tool from [releases](https://github.com/noypi/election2016/tree/master/releases)
+4. (optional) Copy "comelec" tool to %PATH% or $PATH
+
+##### Update scripts
+5. Edit [update_index.js](https://github.com/noypi/election2016/blob/master/comelec/cmd/comelec/update_index.js)
+5.1. Change $path to "\<some folder\>/www.pilipinaselectionresults2016.com", where \<some folder\> is the location of the Comelec Data
+5.2. (Optional) index region names "comelec update_index.js" 
+
+
+##### Run example
+6. Edit [example.js](https://github.com/noypi/election2016/blob/master/comelec/cmd/comelec/example.js)
+6.1. Change $path
+6.2. Run "comelec example.js"
+
+
+##### Golang setup
+http://noypi-linux.blogspot.com/2014/07/golang-windows-complete-setup-guide.html
+
+
+#### Using "comelec" tool
+###### running "comelec" tool
+```
+> comelec example.js
+```
+
+###### index region names, example
+```
+> comelec update_index.js
+```
+
+#### example example.js
+###### must initialize comelec data path
+```javascript
+$path = "/d/dev/res/election2016/www.pilipinaselectionresults2016.com";
+```
+
+###### search region names, example
+```javascript
+$pretty( $search("philippines") );
+```
+
+###### acquiring comelec data
+```javascript
+var oRegion = $('data/regions/OAV.json');
+// tries to convert data to string, then print
+console.log(JSON.stringify(oRegion));
+```
+
+###### use $pretty, to pretty print
+```javascript
+$pretty(oRegion);
+```
+
+###### supports http://underscorejs.org/
+```javascript
+console.log("\n------- test underscorejs")
+_.each(oRegion.subRegions, function(item){
+	console.log("category:", item.categoryName, ", name:", item.name)
+})
+```
+
+###### using $eachls()
+```javascript
+console.log("\n----- using $eachls")
+// list each
+var i = 0
+$eachls('data/regions', function(item){
+	console.log("i=", i, ",", item)
+	i++;
+	if (3==i) {
+		return false // return false to stop
+	}
+})
+
+
+
+
+
+
