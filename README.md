@@ -5,15 +5,15 @@
 4. (optional) Copy "comelec" tool to %PATH% or $PATH
 
 ##### Update scripts (example updating index for searching)
-5. Edit [update_index.js](https://github.com/noypi/election2016/blob/master/comelec/cmd/comelec/update_index.js)
-5.1. Change $path to "\<some folder\>/www.pilipinaselectionresults2016.com", where \<some folder\> is the location of the Comelec Data
-5.2. (Optional) index region names "comelec update_index.js" 
+5 Edit [update_index.js](https://github.com/noypi/election2016/blob/master/comelec/cmd/comelec/update_index.js)
+5.1 Change $path to "\<some folder\>/www.pilipinaselectionresults2016.com", where \<some folder\> is the location of the Comelec Data
+5.2 (Optional) index region names "comelec update_index.js" 
 
 
 ##### Run example
-6. Edit [example.js](https://github.com/noypi/election2016/blob/master/comelec/cmd/comelec/example.js)
-6.1. Change $path
-6.2. Run "comelec example.js"
+6 Edit [example.js](https://github.com/noypi/election2016/blob/master/comelec/cmd/comelec/example.js)
+6.1 Change $path
+6.2 Run "comelec example.js"
 
 
 #### Using "comelec" tool
