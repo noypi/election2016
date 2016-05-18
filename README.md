@@ -1,7 +1,7 @@
 #### Comelec tool
 1. Download [Comelec Data](https://googledrive.com/host/0Bwosw2dzmzRdZkp2eWwyZC03dGs)(333MB)
 2. Extract to \<some folder\>
-3. Download "comelec" tool from [releases](https://github.com/noypi/election2016/tree/master/releases) (TODO)
+3. Download "comelec" tool from [releases](https://github.com/noypi/election2016/tree/master/releases)
 4. (optional) Copy "comelec" tool to %PATH% or $PATH
 
 ##### Update scripts (example updating index for searching)
