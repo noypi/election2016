@@ -1,3 +1,4 @@
-$path = "/d/dev/res/election2016/www.pilipinaselectionresults2016.com";
+$path = "c:/temp/www.pilipinaselectionresults2016.com";
+$dbname = "db";
 
-$pretty( $search("philippines") )
+$pretty( $search("cebu") )

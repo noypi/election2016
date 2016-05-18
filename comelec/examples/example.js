@@ -1,8 +1,9 @@
 // must initialize comelec data path
-$path = "/d/dev/res/election2016/www.pilipinaselectionresults2016.com";
+$path = "c:/temp/www.pilipinaselectionresults2016.com";
+$dbname = "db";
 
 // acquiring comelect data
-var oRegion = $O('data/regions/OAV.json');
+var oRegion = $('data/regions/OAV.json');
 
 // tries to convert data to string, then print
 console.log(JSON.stringify(oRegion));
@@ -19,7 +20,7 @@ _.each(oRegion.subRegions, function(item){
 console.log("\n----- using $eachls")
 // list each
 var limit = 3;
-$eachls('data/regions', function(item){
+$kprefix('data/regions', function(item){
 	$prn(item)
 }, limit)
 
