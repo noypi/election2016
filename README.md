@@ -4,7 +4,7 @@
 3. Download "comelec" tool from [releases](https://github.com/noypi/election2016/tree/master/releases)
 4. (optional) Copy "comelec" tool to %PATH% or $PATH
 
-##### Update scripts (example updating index for searching)
+##### Update scripts (example updating index for searching) (more [examples](https://github.com/noypi/election2016/tree/master/comelec/examples))
 5. Edit [update_index.js](https://github.com/noypi/election2016/blob/master/comelec/cmd/comelec/update_index.js)
 6. Change $path to "\<some folder\>/www.pilipinaselectionresults2016.com", where \<some folder\> is the location of the Comelec Data
 7. (Optional) index region names "comelec update_index.js" 
