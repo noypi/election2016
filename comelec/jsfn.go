@@ -9,12 +9,16 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"unsafe"
 
 	"github.com/robertkrimen/otto"
 	"github.com/robertkrimen/otto/parser"
 	_ "github.com/robertkrimen/otto/underscore"
 
+	"time"
+
 	"github.com/blevesearch/bleve"
+	"github.com/noypi/fp"
 	"github.com/noypi/kv"
 	"github.com/noypi/kv/leveldb"
 )
@@ -29,6 +33,13 @@ type indexMsg struct {
 	Name string
 }
 
+type _timer struct {
+	timer    *time.Timer
+	duration time.Duration
+	interval bool
+	call     otto.FunctionCall
+}
+
 type JsVmComelec struct {
 	vm           *otto.Otto
 	store        kv.KVStore
@@ -38,6 +49,7 @@ type JsVmComelec struct {
 	libpaths     []string
 	comelec_path string
 	db_name      string
+	qMap         map[string]*fp.Promise
 }
 
 func (this *JsVmComelec) dbname() string {
@@ -492,4 +504,77 @@ func (this *JsVmComelec) FindPrefix(s string, cb func(string) bool) {
 			break
 		}
 	}
+}
+
+func (this *JsVmComelec) jsFn_Q(call otto.FunctionCall) otto.Value {
+	fn := call.Argument(0)
+
+	if nil == this.qMap {
+		this.qMap = map[string]*fp.Promise{}
+	}
+
+	q := fp.Future(func() (interface{}, error) {
+		return fn.Call(otto.UndefinedValue())
+	})
+
+	obj, _ := this.vm.Object("({})")
+	id := fmt.Sprintf("%v", unsafe.Pointer(q))
+	this.qMap[id] = q
+	obj.Set("$$id", id)
+	obj.Set("then", this.jsFn_Qthen)
+
+	return obj.Value()
+}
+
+func (this *JsVmComelec) jsFn_Qthen(objcall otto.FunctionCall) otto.Value {
+	objparam1 := objcall.Argument(0)
+	objparam2 := objcall.Argument(1)
+	vid, err := objcall.This.Object().Get("$$id")
+	if nil != err {
+		log.Println("Warn: unknown Q.")
+		return otto.UndefinedValue()
+	}
+	n, err := vid.ToString()
+	if nil != err {
+		log.Println("Warn: Q has invalid $$id.")
+		return otto.UndefinedValue()
+	}
+
+	qCurr, has := this.qMap[n]
+	if !has {
+		log.Fatal("Err: invalid Q, $$id=", n)
+	}
+	qNew := qCurr.Then(func(a interface{}) (interface{}, error) {
+		if objparam1.IsFunction() {
+			return objparam1.Call(objcall.This, a)
+		}
+		return otto.UndefinedValue(), nil
+
+	}, func(a interface{}) (interface{}, error) {
+		if objparam2.IsFunction() {
+			return objparam2.Call(objcall.This, a)
+		}
+		return otto.UndefinedValue(), nil
+
+	})
+
+	delete(this.qMap, fmt.Sprintf("%v", unsafe.Pointer(qCurr)))
+	id := fmt.Sprintf("%v", unsafe.Pointer(qNew))
+	this.qMap[id] = qNew
+	obj, _ := this.vm.Object("({})")
+	obj.Set("$$id", id)
+
+	return obj.Value()
+}
+
+func (this *JsVmComelec) EnableQSupport() {
+	this.vm.Set("$Q", this.jsFn_Q)
+}
+
+func (this *JsVmComelec) QDone() {
+	var wg fp.WaitGroup
+	for _, q := range this.qMap {
+		wg.Add(q)
+	}
+	wg.Wait()
 }

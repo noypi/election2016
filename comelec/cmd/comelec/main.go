@@ -18,6 +18,8 @@ func main() {
 		vm.VM().Set("$args", os.Args[2:])
 	}
 
+	vm.EnableQSupport()
 	vm.Include(fpath)
+	vm.QDone()
 
 }
